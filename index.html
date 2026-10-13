@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Odliczanie do Piątku 14:55</title>
+    <title>Do bezrobocia pozostało:</title>
     <style>
         body {
             margin: 0;
@@ -70,12 +70,38 @@
             font-weight: bold;
             display: none;
         }
+        body {
+    margin: 0;
+    padding: 0;
+    /* Zmień poniższy link na adres URL swojego obrazka */
+    background: url('https://a.assecobs.com/_img/napoje/cb4e92ad-c8bd-47a6-b527-9d20357ec5b6/kaucja.jpg?p=full-view') no-repeat center center fixed;
+    background-size: cover; /* Sprawia, że obrazek wypełnia cały ekran */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #ffffff;
+    position: relative;
+}
+
+/* Opcjonalna ciemna warstwa (overlay), żeby tekst był lepiej widoczny na jasnym zdjęciu */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* Zmień 0.4 na większą wartość (np. 0.6), aby przyciemnić tło */
+    z-index: -1;
+}
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1 id="title">Do piątku (14:55) pozostało:</h1>
+        <h1 id="title">Do bezrobocia pozostało:</h1>
         <div class="timer" id="timerGrid">
             <div class="time-box">
                 <span class="number" id="days">00</span>
@@ -94,7 +120,7 @@
                 <span class="label">Sekund</span>
             </div>
         </div>
-        <div class="weekend-message" id="weekendMsg">🎉 To już ten moment! Miłego weekendu! 🎉</div>
+        <div class="weekend-message" id="weekendMsg">🎉 FUUHH YEAAAAH 🎉</div>
     </div>
 
     <script>
