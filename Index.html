@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Odliczanie do Piątku 14:55</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1e1e2f, #2a2a40);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #ffffff;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px 60px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            color: #a0a0c0;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        .timer {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .time-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            min-width: 80px;
+        }
+
+        .label {
+            font-size: 0.9rem;
+            color: #8c8cf8;
+            text-transform: uppercase;
+            margin-top: 5px;
+            letter-spacing: 2px;
+        }
+
+        .weekend-message {
+            font-size: 2rem;
+            color: #00ffcc;
+            font-weight: bold;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 id="title">Do piątku (14:55) pozostało:</h1>
+        <div class="timer" id="timerGrid">
+            <div class="time-box">
+                <span class="number" id="days">00</span>
+                <span class="label">Dni</span>
+            </div>
+            <div class="time-box">
+                <span class="number" id="hours">00</span>
+                <span class="label">Godzin</span>
+            </div>
+            <div class="time-box">
+                <span class="number" id="minutes">00</span>
+                <span class="label">Minut</span>
+            </div>
+            <div class="time-box">
+                <span class="number" id="seconds">00</span>
+                <span class="label">Sekund</span>
+            </div>
+        </div>
+        <div class="weekend-message" id="weekendMsg">🎉 To już ten moment! Miłego weekendu! 🎉</div>
+    </div>
+
+    <script>
+        function updateCountdown() {
+            const now = new Date();
+            
+            // Tworzymy datę docelową dla najbliższego piątku o 14:55
+            let target = new Date();
+            const currentDay = now.getDay(); // 0 = Niedziela, 1 = Poniedziałek, ..., 5 = Piątek, 6 = Sobota
+            
+            // Obliczamy ile dni zostało do piątku (dzień 5)
+            let daysUntilFriday = 5 - currentDay;
+            
+            // Jeśli dziś jest piątek, ale minęła już godzina 14:55 LUB minął już piątek (sobota/niedziela)
+            if (currentDay > 5 || (currentDay === 5 && (now.getHours() > 14 || (now.getHours() === 14 && now.getMinutes() >= 55)))) {
+                // Cel to piątek w przyszłym tygodniu
+                daysUntilFriday = (7 - currentDay) + 5;
+            }
+
+            target.setDate(now.getDate() + daysUntilFriday);
+            target.setHours(14, 55, 0, 0);
+
+            const diff = target - now;
+
+            if (diff <= 0) {
+                // Jeśli właśnie nadszedł moment
+                document.getElementById("timerGrid").style.display = "none";
+                document.getElementById("title").style.display = "none";
+                document.getElementById("weekendMsg").style.display = "block";
+                return;
+            }
+
+            // Obliczenia dni, godzin, minut, sekund
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            // Wyświetlanie z wiodącym zerem
+            document.getElementById("days").textContent = String(days).padStart(2, '0');
+            document.getElementById("hours").textContent = String(hours).padStart(2, '0');
+            document.getElementById("minutes").textContent = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").textContent = String(seconds).padStart(2, '0');
+        }
+
+        // Uruchomienie natychmiast, a potem co sekundę
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
